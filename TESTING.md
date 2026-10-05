@@ -39,3 +39,9 @@ Después de configurar acceso, seguir el procedimiento de `README.md`. Revisar a
 ## Versión 0.2.0
 
 Selección múltiple con casillas, seleccionar/deseleccionar todas y aplicación explícita. Pruebas de preservación de descripciones e identificadores, subcarpetas independientes, carpetas eliminadas durante la selección y límite de 254 categorías. La interfaz nueva aún requiere comprobación visual dentro de Obsidian. El usuario confirmó que la versión 0.1.0 funciona en su instalación.
+
+## Versión 0.2.1 — preparación del catálogo
+
+`npm run check` pasa: lint oficial sin errores, compilación, 40 pruebas y validación de metadatos/archivos de release. Quedan dos advertencias de compatibilidad: API de ajustes anterior para Obsidian 1.11.4 y tooltip del deslizador. El cliente compartido con el evaluador Node usa temporizadores portables; esa recomendación del linter se desactiva solo para ese archivo.
+
+Se sustituyó el tipado inseguro de respuestas por validación explícita y se usan encabezados nativos en ajustes. No se ha realizado una nueva prueba visual de 0.2.1 ni se afirma aprobación por el catálogo. El workflow de CI repite las comprobaciones sin claves ni llamadas a TypeSafe.

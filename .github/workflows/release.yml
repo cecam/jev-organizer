@@ -1,0 +1,33 @@
+name: Prepare draft release
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run package
+      - name: Create draft with individually downloadable assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          VERSION=$(node -p "require('./manifest.json').version")
+          gh release create "$VERSION" \
+            --draft \
+            --target "$GITHUB_SHA" \
+            --title "Jev Organizer $VERSION" \
+            --notes-file "docs/release-notes-$VERSION.md" \
+            main.js manifest.json styles.css \
+            "release/jev-organizer-$VERSION.zip" \
+            "release/jev-organizer-$VERSION.zip.sha256"

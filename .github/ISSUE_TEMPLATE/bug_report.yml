@@ -1,0 +1,31 @@
+name: Bug report / Reportar error
+description: Report unexpected behavior using fictional or anonymized examples.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "English and Spanish welcome. Never include API keys, private notes or your secrets store."
+  - type: input
+    id: versions
+    attributes:
+      label: Versions and platform
+      description: Plugin version, Obsidian version and operating system.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Optional fictional example
+      description: For classification issues, include model, threshold and relevant category descriptions. No private data.

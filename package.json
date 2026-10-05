@@ -1,6 +1,6 @@
 {
   "name": "jev-organizer",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "Clasifica y archiva notas de Obsidian con Jev de TypeSafe.",
   "scripts": {
@@ -9,13 +9,26 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "package": "npm run build && node scripts/package.mjs",
-    "evaluate": "node scripts/evaluate.mjs"
+    "evaluate": "node scripts/evaluate.mjs",
+    "lint": "eslint src --max-warnings 2",
+    "check:release": "node scripts/check-release.mjs",
+    "check": "npm run lint && npm run build && npm test && npm run check:release"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "esbuild": "^0.25.0",
+    "eslint": "^9.39.5",
+    "eslint-plugin-obsidianmd": "^0.4.2",
     "obsidian": "^1.11.4",
     "typescript": "^5.9.0",
     "vitest": "^3.2.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cecam/jev-organizer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cecam/jev-organizer/issues"
   }
 }

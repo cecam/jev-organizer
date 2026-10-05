@@ -1,0 +1,18 @@
+import { readFile, access } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const read = async path => JSON.parse(await readFile(path, 'utf8'));
+const [manifest, pkg, versions, lock] = await Promise.all(['manifest.json', 'package.json', 'versions.json', 'package-lock.json'].map(read));
+assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
+assert.equal(manifest.version, pkg.version);
+assert.equal(manifest.version, lock.version);
+assert.equal(manifest.version, lock.packages[''].version);
+assert.equal(versions[manifest.version], manifest.minAppVersion);
+assert.equal(manifest.id, 'jev-organizer');
+assert.equal(manifest.isDesktopOnly, true);
+assert.ok(manifest.description.length <= 250 && manifest.description.endsWith('.'));
+assert.equal(pkg.license, 'MIT');
+assert.ok((await readFile('LICENSE', 'utf8')).startsWith('MIT License'));
+for (const path of ['main.js', 'styles.css', 'README.md', 'README.es.md', 'SECURITY.md', 'CONTRIBUTING.md']) await access(path);
+const bundle = await readFile('main.js', 'utf8');
+assert.ok(!bundle.includes('node:fs'), 'The evaluation CLI must not be bundled into the plugin');
+console.log(`Release metadata and runtime assets validated: ${manifest.version}`);

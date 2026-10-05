@@ -1,9 +1,10 @@
 {
   "id": "jev-organizer",
   "name": "Jev Organizer",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "minAppVersion": "1.11.4",
-  "description": "Clasifica y mueve la nota activa a tus carpetas usando Jev de TypeSafe.",
+  "description": "Classify the active note with TypeSafe's Jev and move it to a selected folder, with a review folder and undo.",
   "author": "Celso Cárdenas",
-  "isDesktopOnly": true
+  "isDesktopOnly": true,
+  "authorUrl": "https://github.com/cecam"
 }

@@ -25,9 +25,10 @@ export function buildRequest(title: string, markdown: string, settings: Settings
 
 export function parseDecision(raw: unknown, request: DecisionRequest): Decision {
   const fail = () => { throw new Error('TypeSafe devolvió una respuesta inválida. La nota no se ha movido.'); };
-  if (!raw || typeof raw !== 'object') return fail();
-  const r = raw as Record<string, any>;
-  const answer = r.answers?.category;
+  const isRecord = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === 'object' && !Array.isArray(value);
+  if (!isRecord(raw) || !isRecord(raw.answers) || !isRecord(raw.answers.category)) return fail();
+  const r = raw;
+  const answer = raw.answers.category;
   const options = Object.keys(request.questions.category.criteria);
   if (typeof r.model !== 'string' || !answer || answer.type !== 'choice'
     || typeof answer.choice !== 'string' || !options.includes(answer.choice)

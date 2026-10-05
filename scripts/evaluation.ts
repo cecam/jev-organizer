@@ -1,7 +1,7 @@
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
-import { JevClient } from './client';
-import { buildRequest, destination, REVIEW } from './decision';
-import { activeCategories, DEFAULTS, type Category } from './settings';
+import { JevClient } from '../src/client';
+import { buildRequest, destination, REVIEW } from '../src/decision';
+import { activeCategories, DEFAULTS, type Category } from '../src/settings';
 
 const key = process.env.TYPESAFE_API_KEY;
 if (!key?.trim()) throw new Error('Falta TYPESAFE_API_KEY.');

@@ -14,18 +14,20 @@ class FolderSuggest extends AbstractInputSuggest<TFolder> {
   selectSuggestion(folder: TFolder): void { this.setValue(folder.path); this.selected(folder.path); this.close(); }
 }
 
+// Keep the imperative settings API to support Obsidian 1.11.4.
 export class OrganizerSettingsTab extends PluginSettingTab {
   private suggests: FolderSuggest[] = [];
   constructor(app: App, private plugin: JevOrganizerPlugin) { super(app, plugin); }
   hide(): void { this.suggests.forEach(s => s.close()); this.suggests = []; }
 
-  display(): void {
+  display(): void { this.renderSettings(); }
+
+  private renderSettings(): void {
     this.hide();
     const { containerEl } = this;
     const settings = this.plugin.settings;
     containerEl.empty();
-    containerEl.createEl('h2', { text: 'Jev Organizer' });
-    containerEl.createEl('p', { text: 'Clasifica la nota activa con un comando y muévela a una de tus carpetas. Los atajos se asignan en Ajustes → Atajos de teclado.' });
+    containerEl.createEl('p', { text: 'Clasifica la nota activa con un comando y muévela a una de tus carpetas. Los atajos se asignan en ajustes → atajos de teclado.' });
     const privacy = containerEl.createDiv({ cls: 'jev-info' });
     privacy.createEl('p', { text: 'Cada clasificación envía a TypeSafe el título y Markdown completo de esa nota, junto con las descripciones y ejemplos de tus categorías. No envía otras notas ni archivos adjuntos. El uso de la API se factura en tu cuenta de TypeSafe.' });
 
@@ -55,19 +57,20 @@ export class OrganizerSettingsTab extends PluginSettingTab {
         settings.initialized = true;
         this.plugin.persist();
         new Notice('Carpeta de revisión actualizada.');
-        this.display();
+        this.renderSettings();
       } catch (error) { this.plugin.showError(error); }
       finally { button.setDisabled(false); }
     }));
     if (!(this.app.vault.getAbstractFileByPath(settings.reviewPath) instanceof TFolder)) {
-      containerEl.createEl('p', { cls: 'jev-warning', text: 'La carpeta de revisión no existe o su ruta está ocupada por un archivo. Usa Aplicar para crearla o corregirla.' });
+      containerEl.createEl('p', { cls: 'jev-warning', text: 'La carpeta de revisión no existe o su ruta está ocupada por un archivo. Usa «aplicar» para crearla o corregirla.' });
     }
 
     new Setting(containerEl).setName('Confianza mínima').setDesc('Valor inicial: 0,80. Es una señal del modelo, no un porcentaje garantizado de aciertos. Ajusta el umbral con tus propios artículos.').addSlider(slider => slider
+      // Numeric tooltip is needed on the supported 1.11.4 release.
       .setLimits(0, 1, 0.01).setValue(settings.threshold).setDynamicTooltip().onChange(value => { settings.threshold = value; this.plugin.persist(); }));
 
-    containerEl.createEl('h3', { text: '1. Selecciona las carpetas' });
-    containerEl.createEl('p', { text: 'Marca las carpetas que participarán en la clasificación y pulsa Aplicar selección. Cada subcarpeta es una opción independiente. La carpeta de revisión no se incluye.' });
+    new Setting(containerEl).setName('1. Selecciona las carpetas').setHeading();
+    containerEl.createEl('p', { text: 'Marca las carpetas que participarán en la clasificación y pulsa «aplicar selección». Cada subcarpeta es una opción independiente. La carpeta de revisión no se incluye.' });
     const folderPaths = () => this.app.vault.getAllLoadedFiles()
       .filter((file): file is TFolder => file instanceof TFolder && validFolderPath(file.path) && file.path !== settings.reviewPath)
       .map(folder => folder.path).sort((a, b) => a.localeCompare(b));
@@ -91,7 +94,7 @@ export class OrganizerSettingsTab extends PluginSettingTab {
     for (const path of [...paths, ...missing.map(c => c.path)]) {
       const row = list.createEl('label', { cls: 'jev-folder-option' });
       const checkbox = row.createEl('input', { attr: { type: 'checkbox' } });
-      row.createEl('span', { text: paths.includes(path) ? path : `${path} (ya no existe)`, cls: paths.includes(path) ? '' : 'jev-warning' });
+      row.createSpan({ text: paths.includes(path) ? path : `${path} (ya no existe)`, cls: paths.includes(path) ? '' : 'jev-warning' });
       checkboxes.set(path, checkbox);
       checkbox.addEventListener('change', () => {
         if (checkbox.checked) selected.add(path); else selected.delete(path);
@@ -105,26 +108,26 @@ export class OrganizerSettingsTab extends PluginSettingTab {
       try {
         settings.categories = applyFolderSelection(settings.categories, selected, new Set(folderPaths()), settings.reviewPath);
         this.plugin.persist();
-        this.display();
+        this.renderSettings();
         this.containerEl.querySelector<HTMLElement>('.jev-descriptions-heading')?.scrollIntoView({ block: 'start' });
         new Notice('Selección aplicada. Completa las descripciones de las carpetas nuevas.');
       } catch (error) { this.plugin.showError(error); }
     });
     refresh();
-    containerEl.createEl('p', { cls: 'setting-item-description', text: 'Los cambios de selección se guardan al pulsar Aplicar selección. Las descripciones se conservan si desmarcas y vuelves a seleccionar una carpeta.' });
-    containerEl.createEl('h3', { text: '2. Describe las carpetas seleccionadas', cls: 'jev-descriptions-heading' });
+    containerEl.createEl('p', { cls: 'setting-item-description', text: 'Los cambios de selección se guardan al pulsar «aplicar selección». Las descripciones se conservan si desmarcas y vuelves a seleccionar una carpeta.' });
+    new Setting(containerEl).setName('2. Describe las carpetas seleccionadas').setHeading().settingEl.addClass('jev-descriptions-heading');
     if (!settings.categories.some(c => c.enabled)) containerEl.createEl('p', { text: 'Selecciona las carpetas arriba y aplica la selección para completar sus descripciones.' });
     for (const category of settings.categories.filter(c => c.enabled)) {
       const card = containerEl.createDiv({ cls: 'jev-category' });
-      card.createEl('h4', { text: category.path });
+      new Setting(card).setName(category.path).setHeading();
       if (!(this.app.vault.getAbstractFileByPath(category.path) instanceof TFolder)) card.createEl('p', { cls: 'jev-warning', text: 'Esta carpeta ya no existe. Desmárcala en la lista y aplica la selección.' });
       new Setting(card).setName('Nombre').addText(text => text.setValue(category.name).onChange(value => { category.name = value; this.plugin.persist(); }));
-      new Setting(card).setName('Descripción obligatoria').setDesc('Indica el tema principal, qué incluir y qué excluir.').addTextArea(text => text.setValue(category.description).setPlaceholder('Artículos sobre… Excluir…').onChange(value => { category.description = value; this.plugin.persist(); }));
+      new Setting(card).setName('Descripción obligatoria').setDesc('Indica el tema principal, qué incluir y qué excluir.').addTextArea(text => text.setValue(category.description).setPlaceholder('Artículos sobre… excluir…').onChange(value => { category.description = value; this.plugin.persist(); }));
       new Setting(card).setName('Ejemplos opcionales').setDesc('Títulos o descripciones breves de artículos representativos.').addTextArea(text => text.setValue(category.examples).onChange(value => { category.examples = value; this.plugin.persist(); }));
     }
-    containerEl.createEl('h3', { text: 'Avanzado' });
+    new Setting(containerEl).setName('Avanzado').setHeading();
     let model = settings.model;
-    new Setting(containerEl).setName('Modelo de Jev').setDesc('Inicial: jev-1.13.0. Una versión fija evita cambios inesperados de clasificación. También admite jev-latest.').addText(text => text.setValue(model).onChange(value => { model = value.trim(); }))
+    new Setting(containerEl).setName('Modelo de Jev').setDesc('Una versión fija evita cambios inesperados de clasificación. También puedes usar el alias de la versión estable más reciente.').addText(text => text.setValue(model).onChange(value => { model = value.trim(); }))
       .addButton(button => button.setButtonText('Aplicar').onClick(() => {
         if (!/^jev-[a-zA-Z0-9.-]+$/.test(model)) { new Notice('Introduce un identificador de modelo Jev válido.'); return; }
         settings.model = model; this.plugin.persist(); new Notice('Modelo actualizado.');

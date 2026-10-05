@@ -23,7 +23,7 @@ export const DEFAULTS: Settings = {
 };
 
 export function validFolderPath(path: string): boolean {
-  return path.length > 0 && !/[\\\u0000-\u001f]/.test(path)
+  return path.length > 0 && !path.includes('\\') && !Array.from(path).some(char => char.charCodeAt(0) < 32)
     && path.split('/').every(part => part.length > 0 && part !== '.' && part !== '..' && !part.startsWith('.'));
 }
 

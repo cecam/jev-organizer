@@ -1,0 +1,17 @@
+name: Feature request / Sugerencia
+description: Describe a workflow you would like to improve.
+title: "[Idea] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: English and Spanish welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Suggested behavior
+    validations:
+      required: true

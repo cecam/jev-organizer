@@ -79,7 +79,7 @@ export default class JevOrganizerPlugin extends Plugin {
       if (!this.loaded) return;
       this.settings.initialized = true;
       this.persist();
-      new Notice('Jev Organizer: la carpeta de revisión está lista. Configura tu clave y categorías en Ajustes → Jev Organizer.', 9000);
+      new Notice('Jev Organizer: la carpeta de revisión está lista. Configura tu clave y categorías en ajustes → Jev Organizer.', 9000);
     } catch (error) { this.showError(error); }
   }
 
@@ -139,9 +139,9 @@ export default class JevOrganizerPlugin extends Plugin {
     try {
       const outcome = await this.organizer.run();
       if (!this.loaded) return;
-      const fragment = document.createDocumentFragment();
-      fragment.createEl('div', { text: outcome.moved ? `Movido a ${outcome.path}` : `La nota ya está en ${outcome.path}` });
-      if (outcome.review) fragment.createEl('div', { text: 'Requiere revisión: no hay una categoría suficientemente clara.' });
+      const fragment = createFragment();
+      fragment.createDiv({ text: outcome.moved ? `Movido a ${outcome.path}` : `La nota ya está en ${outcome.path}` });
+      if (outcome.review) fragment.createDiv({ text: 'Requiere revisión: no hay una categoría suficientemente clara.' });
       if (outcome.moved) {
         const button = fragment.createEl('button', { text: 'Deshacer' });
         button.addEventListener('click', () => {

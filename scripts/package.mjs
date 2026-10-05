@@ -1,0 +1,13 @@
+import { mkdir, copyFile, readFile, writeFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+const manifest = JSON.parse(await readFile('manifest.json', 'utf8'));
+const directory = `release/${manifest.id}`;
+await mkdir(directory, { recursive: true });
+const files = ['main.js', 'manifest.json', 'styles.css', 'README.md', 'TESTING.md'];
+for (const name of files) await copyFile(name, `${directory}/${name}`);
+const zip = `${manifest.id}-${manifest.version}.zip`;
+execFileSync('/usr/bin/zip', ['-q', '-r', '-FS', zip, manifest.id], { cwd: 'release' });
+const hash = createHash('sha256').update(await readFile(`release/${zip}`)).digest('hex');
+await writeFile(`release/${zip}.sha256`, `${hash}  ${zip}\n`);
+console.log(`Paquete: release/${zip}\nSHA-256: ${hash}`);

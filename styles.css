@@ -1,0 +1,26 @@
+.jev-info {
+  border-left: 3px solid var(--interactive-accent);
+  padding: 0.1em 1em;
+  background: var(--background-secondary);
+  border-radius: var(--radius-s);
+}
+.jev-category {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  padding: 0 1em;
+  margin: 1em 0;
+}
+.jev-category textarea { width: 100%; min-width: 220px; min-height: 5em; resize: vertical; }
+.jev-warning { color: var(--text-warning); }
+
+.jev-folder-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.jev-folder-list { max-height: 320px; overflow-y: auto; border: 1px solid var(--background-modifier-border); border-radius: var(--radius-m); padding: 8px; }
+.jev-folder-option { display: flex; align-items: flex-start; gap: 10px; padding: 8px; border-radius: var(--radius-s); cursor: pointer; }
+.jev-folder-option:hover { background: var(--background-secondary); }
+.jev-folder-option:focus-within { outline: 2px solid var(--interactive-accent); outline-offset: -2px; }
+.jev-folder-option input { flex-shrink: 0; margin-top: 3px; }
+.jev-folder-option span { overflow-wrap: anywhere; }
+.jev-category h4 { overflow-wrap: anywhere; }
+.jev-category .setting-item:has(textarea) { flex-direction: column; align-items: stretch; gap: 8px; }
+.jev-category .setting-item:has(textarea) .setting-item-control { width: 100%; }
+.jev-category textarea { min-width: 0; }

@@ -1,0 +1,21 @@
+{
+  "name": "jev-organizer",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Clasifica y archiva notas de Obsidian con Jev de TypeSafe.",
+  "scripts": {
+    "dev": "node esbuild.config.mjs --watch",
+    "build": "tsc --noEmit && node esbuild.config.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "package": "npm run build && node scripts/package.mjs",
+    "evaluate": "node scripts/evaluate.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "esbuild": "^0.25.0",
+    "obsidian": "^1.11.4",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

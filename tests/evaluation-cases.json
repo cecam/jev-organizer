@@ -1,0 +1,175 @@
+{
+  "kind": "synthetic-spanish-smoke-test",
+  "categories": [
+    {
+      "id": "cat-ai",
+      "name": "Inteligencia artificial",
+      "path": "Artículos/IA",
+      "description": "Modelos, agentes, evaluación y desarrollo de sistemas de inteligencia artificial. Excluir hábitos personales y estrategia comercial si son el tema central.",
+      "examples": "Evaluación de agentes; modelos de lenguaje",
+      "enabled": true
+    },
+    {
+      "id": "cat-work",
+      "name": "Productividad",
+      "path": "Artículos/Productividad",
+      "description": "Hábitos, organización personal, concentración y gestión del conocimiento. El tema central debe ser mejorar cómo trabaja una persona, aunque use herramientas de IA.",
+      "examples": "Revisión semanal; organización de notas",
+      "enabled": true
+    },
+    {
+      "id": "cat-business",
+      "name": "Negocios",
+      "path": "Artículos/Negocios",
+      "description": "Estrategia empresarial, ventas, precios, adquisición de clientes y emprendimiento. Incluye empresas de IA si el tema principal es comercial.",
+      "examples": "Validar demanda; fijar precios",
+      "enabled": true
+    }
+  ],
+  "cases": [
+    {
+      "id": "es-01",
+      "title": "Evaluar agentes",
+      "markdown": "Un agente puede completar una tarea y aun así fallar en herramientas intermedias. Para medirlo conviene registrar las llamadas, preparar casos difíciles y evaluar si el resultado final cumple el objetivo. La evaluación compara diferentes modelos bajo el mismo conjunto de tareas.",
+      "expected": "cat-ai"
+    },
+    {
+      "id": "es-02",
+      "title": "Recuperación para modelos",
+      "markdown": "Un sistema RAG recupera fragmentos relevantes antes de formular una respuesta. El tamaño de los fragmentos y la calidad de la búsqueda influyen en si el modelo puede citar la fuente adecuada. Aquí comparamos recuperación semántica y búsqueda por palabras.",
+      "expected": "cat-ai"
+    },
+    {
+      "id": "es-03",
+      "title": "Ventana de contexto",
+      "markdown": "La ventana de contexto establece cuánto texto puede procesar un modelo por solicitud. Tener una ventana mayor no garantiza que encuentre todos los detalles. Las pruebas con documentos extensos deben comprobar información ubicada al principio y al final.",
+      "expected": "cat-ai"
+    },
+    {
+      "id": "es-04",
+      "title": "Clasificadores de texto",
+      "markdown": "Un clasificador asigna etiquetas a documentos. Hay que reservar ejemplos separados del entrenamiento y medir la matriz de confusión. La calibración permite interpretar mejor las probabilidades y definir cuándo abstenerse.",
+      "expected": "cat-ai"
+    },
+    {
+      "id": "es-05",
+      "title": "Herramientas para agentes",
+      "markdown": "Las herramientas de un agente necesitan argumentos bien definidos. Validar cada llamada evita ejecutar operaciones con parámetros inválidos. Este artículo muestra el diseño de una interfaz de búsqueda para un agente de lenguaje.",
+      "expected": "cat-ai"
+    },
+    {
+      "id": "es-06",
+      "title": "Inferencia local",
+      "markdown": "Ejecutar un modelo en una computadora exige estimar memoria y velocidad. La cuantización reduce el espacio de los pesos, con posibles diferencias de calidad. El experimento compara inferencias sobre un conjunto fijo de preguntas.",
+      "expected": "cat-ai"
+    },
+    {
+      "id": "es-07",
+      "title": "Ataques de instrucciones",
+      "markdown": "Un documento recuperado puede contener instrucciones destinadas a alterar el comportamiento del modelo. Debe tratarse como información no confiable. Las pruebas de seguridad comprueban si el agente respeta la separación entre datos y órdenes.",
+      "expected": "cat-ai"
+    },
+    {
+      "id": "es-08",
+      "title": "Revisión semanal",
+      "markdown": "Cada viernes reviso tareas pendientes, calendario y compromisos. Esta rutina ayuda a elegir prioridades para la próxima semana y eliminar tareas que dejaron de importar. La herramienta concreta es secundaria frente al hábito de revisar.",
+      "expected": "cat-work"
+    },
+    {
+      "id": "es-09",
+      "title": "Escribir sin distracciones",
+      "markdown": "Reservar un bloque de tiempo sin notificaciones permite avanzar en un borrador. Dejo el teléfono fuera de la habitación y preparo las referencias antes de empezar. Al terminar anoto cuál será el siguiente paso.",
+      "expected": "cat-work"
+    },
+    {
+      "id": "es-10",
+      "title": "Notas que vuelves a encontrar",
+      "markdown": "Una nota útil tiene un título descriptivo y contexto suficiente para entenderla semanas después. Organizar notas consiste en facilitar su recuperación, no en crear la mayor cantidad de carpetas. La revisión periódica conecta ideas nuevas y antiguas.",
+      "expected": "cat-work"
+    },
+    {
+      "id": "es-11",
+      "title": "Agenda realista",
+      "markdown": "Planificar cada minuto suele ignorar interrupciones. Una agenda realista reserva margen y limita los objetivos del día. Elegir tres tareas importantes permite adaptar el plan sin perder de vista lo esencial.",
+      "expected": "cat-work"
+    },
+    {
+      "id": "es-12",
+      "title": "IA en mi rutina semanal",
+      "markdown": "Uso un asistente para resumir mis pendientes, pero el tema central de mi sistema es decidir prioridades. Primero reviso mis compromisos y después organizo bloques de concentración. La mejora viene de sostener la rutina cada semana.",
+      "expected": "cat-work"
+    },
+    {
+      "id": "es-13",
+      "title": "Leer y tomar notas",
+      "markdown": "Después de leer un capítulo escribo las ideas principales con mis propias palabras. Así detecto lo que entendí y lo que debo repasar. Una revisión espaciada ayuda a conservar el aprendizaje sin copiar páginas enteras.",
+      "expected": "cat-work"
+    },
+    {
+      "id": "es-14",
+      "title": "Reuniones más cortas",
+      "markdown": "Antes de una reunión defino el resultado esperado y envío el contexto. Si la decisión puede resolverse por escrito, libero ese tiempo en mi agenda. Mi objetivo es proteger las horas dedicadas al trabajo individual.",
+      "expected": "cat-work"
+    },
+    {
+      "id": "es-15",
+      "title": "Validar un negocio",
+      "markdown": "Antes de construir un producto entrevisto a posibles compradores. Busco problemas repetidos y pruebo si alguien está dispuesto a pagar por una solución. Una lista de interesados no equivale a demanda confirmada.",
+      "expected": "cat-business"
+    },
+    {
+      "id": "es-16",
+      "title": "Precios de suscripción",
+      "markdown": "El precio de una suscripción debe relacionarse con el valor que recibe el cliente y los costos del servicio. Comparar planes permite atender segmentos distintos. Analizo conversión, cancelación e ingresos por cliente.",
+      "expected": "cat-business"
+    },
+    {
+      "id": "es-17",
+      "title": "Ventas a empresas",
+      "markdown": "En una venta empresarial suelen participar usuarios, responsables de presupuesto y equipos de compras. Entender el proceso de decisión evita propuestas dirigidas a la persona equivocada. El seguimiento debe resolver objeciones concretas.",
+      "expected": "cat-business"
+    },
+    {
+      "id": "es-18",
+      "title": "Una empresa de agentes de IA",
+      "markdown": "Nuestra startup vende agentes a despachos pequeños. El artículo analiza el canal de adquisición, el costo de conseguir clientes y la estructura del plan mensual. La ventaja comercial depende de resolver un problema que el comprador valore.",
+      "expected": "cat-business"
+    },
+    {
+      "id": "es-19",
+      "title": "Retención de clientes",
+      "markdown": "Captar clientes no basta si abandonan el servicio al mes siguiente. Analizar cohortes permite observar la retención y detectar segmentos con necesidades mal atendidas. Después priorizamos mejoras que aumenten el valor percibido.",
+      "expected": "cat-business"
+    },
+    {
+      "id": "es-20",
+      "title": "Propuesta de valor",
+      "markdown": "Una propuesta de valor explica qué problema resolvemos, para quién y por qué somos una buena opción. Debe ser específica y verificable. La probamos en conversaciones comerciales antes de invertir en publicidad.",
+      "expected": "cat-business"
+    },
+    {
+      "id": "es-21",
+      "title": "Pan casero",
+      "markdown": "Para preparar pan mezclo harina, agua, levadura y sal. Dejo fermentar la masa, formo una pieza y la horneo hasta que la corteza tenga color. El tiempo depende de la temperatura de la cocina.",
+      "expected": "needs-review"
+    },
+    {
+      "id": "es-22",
+      "title": "Senderismo en la montaña",
+      "markdown": "La ruta empieza en el bosque y termina junto a un lago. Durante el recorrido observamos aves y descansamos en un mirador. Este relato describe el paisaje y la experiencia de caminar al amanecer.",
+      "expected": "needs-review"
+    },
+    {
+      "id": "es-23",
+      "title": "Poema de lluvia",
+      "markdown": "La lluvia dibuja caminos en el vidrio. Una luz se refleja en la calle vacía y el silencio acompaña la noche. Guardo la imagen de una ventana abierta al olor de la tierra.",
+      "expected": "needs-review"
+    },
+    {
+      "id": "es-24",
+      "title": "Pensamientos sin desarrollar",
+      "markdown": "Tengo varias ideas que todavía no puedo explicar. Quiero volver a ellas después y darles una forma más clara. Esta nota no contiene aún un tema concreto.",
+      "expected": "needs-review"
+    }
+  ]
+}

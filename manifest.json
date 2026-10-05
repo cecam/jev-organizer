@@ -1,0 +1,9 @@
+{
+  "id": "jev-organizer",
+  "name": "Jev Organizer",
+  "version": "0.2.0",
+  "minAppVersion": "1.11.4",
+  "description": "Clasifica y mueve la nota activa a tus carpetas usando Jev de TypeSafe.",
+  "author": "Celso Cárdenas",
+  "isDesktopOnly": true
+}
